@@ -6,13 +6,12 @@ const app = new Hono();
 
 app.use("*", async (c, next) => {
   const corsMiddlewareHandler = cors({
-    origin: [
+    origin: process.env.CORS_ORIGIN?.split(",") ??[
       "http://localhost:3000",
-      "https://bunflix.bsws.in",
       "http://localhost:3001",
     ],
     allowHeaders: ["*"],
-    allowMethods: ["POST", "GET", "OPTIONS"],
+    allowMethods: ["GET", "OPTIONS"],
     exposeHeaders: ["Content-Length", "Content-Type"],
     maxAge: 600,
     credentials: true,
