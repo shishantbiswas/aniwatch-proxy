@@ -25,7 +25,7 @@ app.get("/", (c) => {
 
 app.get("/proxy/*", async (c) => {
   const reqUrl = c.req.url.split("/").slice(4);
-  const headers = c.req.header();
+  const Origin = c.req.header("Origin") ?? "http://localhost:3000";
 
   const url = reqUrl
     .map((part) => (part === "https:" ? part + "//" : part + "/"))
@@ -40,7 +40,7 @@ app.get("/proxy/*", async (c) => {
       "Sec-Fetch-Dest": "empty",
       "Sec-Fetch-Mode": "cors",
       "Sec-Fetch-Site": "same-site",
-      Origin: "http://localhost:3000",
+      Origin,
       Connection: "keep-alive",
       "Accept-Encoding": "gzip, deflate, br, zstd",
       "Accept-Language": "en-US,en;q=0.9",
